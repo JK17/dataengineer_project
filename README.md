@@ -25,3 +25,17 @@ Then create medalion architecture on DataBricks:
 * bronze
 * silver
 * gold 
+
+## Repo strucuture
+* src/ - is for source code (Python, ingestion, helper)
+* notebooks/ - is for DataBricks notebooks 
+* tests/ - is for unit tests
+* infra/ - is for Terraform code to create needed architecture
+* docs/ - is for keeping all documentation in one place
+
+## How to run the code? 
+TO DO
+
+## TO DO 
+* update [Architecture](#planned-architecture) 
+* update [How to run the code](#how-to-run-the-code?) 
