@@ -1,7 +1,7 @@
 # dataengineer_project
-Project to create end-to-end data engineer project mainly with DataBricks and AWS. 
+Project to create end-to-end data engineer project mainly with DataBricks and AWS.
 
-## What project is about? 
+## What project is about?
 Project is about quality of air near polish schools. Aim of the project is to answer/create 5 businnes needs:
 1. Which schools require priority intervention (e.g., air purifiers, "green screens," traffic restrictions) based on average and maximum daily/weekly PM10 and PM2.5 concentrations?
 → Ranking of schools by "worst" air quality, a basis for investment decisions.
@@ -19,23 +19,23 @@ Source of the data is from polish governmnet affiliate:
 [link]{https://dane.gov.pl/en/dataset/2913,dane-pomiarowe-esa-edukacyjna-siec-antysmogowa}
 
 ## Planned architecture
-Plan is to create simple datalake using S3. 
+Plan is to create simple datalake using S3.
 Then create medalion architecture on DataBricks:
-* raw 
+* raw
 * bronze
 * silver
-* gold 
+* gold
 
 ## Repo strucuture
 * src/ - is for source code (Python, ingestion, helper)
-* notebooks/ - is for DataBricks notebooks 
+* notebooks/ - is for DataBricks notebooks
 * tests/ - is for unit tests
 * infra/ - is for Terraform code to create needed architecture
 * docs/ - is for keeping all documentation in one place
 
-## How to run the code? 
+## How to run the code?
 TO DO
 
-## TO DO 
-* update [Architecture](#planned-architecture) 
-* update [How to run the code](#how-to-run-the-code?) 
+## TO DO
+* update [Architecture](#planned-architecture)
+* update [How to run the code](#how-to-run-the-code?)
