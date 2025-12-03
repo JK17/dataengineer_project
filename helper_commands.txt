@@ -1,0 +1,1 @@
+pre-commit run --all-files  - command to run check before commits files

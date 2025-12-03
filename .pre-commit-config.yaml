@@ -1,0 +1,98 @@
+repos:
+  # --- Podstawowe szybkie hooki ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        stages:
+          - pre-commit
+      - id: end-of-file-fixer
+        stages:
+          - pre-commit
+      - id: check-merge-conflict
+        stages:
+          - pre-commit
+      - id: check-yaml
+        stages:
+          - pre-commit
+      - id: check-json
+        stages:
+          - pre-commit
+      - id: check-added-large-files
+        stages:
+          - pre-commit
+        args:
+          - '--maxkb=1024'
+          # max 1 MB na plik
+
+  # --- Python: Ruff (szybki formatter + linter) ---
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.0
+    hooks:
+      - id: ruff-format
+        stages:
+          - pre-commit
+      - id: ruff
+        args:
+          - '--fix'
+        stages:
+          - pre-commit
+
+  # --- Python: mypy (cięższy, na push) ---
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        stages:
+          - pre-push
+        # dopasuj ścieżki / opcje do projektu
+        args:
+          - '--ignore-missing-imports'
+          - '--explicit-package-bases'
+
+  # # --- Python: bezpieczeństwo (na push) ---
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.7.9
+  #   hooks:
+  #     - id: bandit
+  #       stages: [pre-push]
+  #       args: ["-r", "src"]
+
+  # --- Terraform ---
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.93.0
+    hooks:
+      # szybkie formatowanie przy commicie
+      - id: terraform_fmt
+        stages:
+          - pre-commit
+      # cięższe rzeczy przy pushu
+      - id: terraform_validate
+        stages:
+          - pre-push
+      # odkomentuj jeśli używasz tflint
+      # - id: terraform_tflint
+      #   stages: [push]
+
+      # --- Sekrety (na push) ---
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        stages:
+          - pre-push
+        args:
+          - '--baseline'
+          - .secrets.baseline
+
+  # --- Lokalne hooki projektu (testy itd.) ---
+  - repo: local
+    hooks:
+      # Testy przed pushem – możesz zawęzić np. do unitów
+      - id: pytest-fast
+        name: pytest (fast)
+        entry: pytest tests -m "not slow"
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-push
