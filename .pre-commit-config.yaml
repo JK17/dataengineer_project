@@ -24,7 +24,7 @@ repos:
       - id: ruff-format
         stages: [pre-commit]
       - id: ruff
-        args: ["check", "--fix"]
+        args: ["--fix"]
         stages: [pre-commit]
 
   # --- Python: mypy (cięższy, na push) ---
