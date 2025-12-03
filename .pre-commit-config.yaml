@@ -4,40 +4,52 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       - id: end-of-file-fixer
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       - id: check-merge-conflict
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       - id: check-yaml
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       - id: check-json
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       - id: check-added-large-files
-        stages: [pre-commit]
-        args: ["--maxkb=1024"]  # max 1 MB na plik
+        stages:
+          - pre-commit
+        args:
+          - '--maxkb=1024'
+          # max 1 MB na plik
 
   # --- Python: Ruff (szybki formatter + linter) ---
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.7.0
     hooks:
       - id: ruff-format
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       - id: ruff
-        args: ["--fix"]
-        stages: [pre-commit]
+        args:
+          - '--fix'
+        stages:
+          - pre-commit
 
   # --- Python: mypy (cięższy, na push) ---
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.13.0
     hooks:
       - id: mypy
-        stages: [pre-push]
+        stages:
+          - pre-push
         # dopasuj ścieżki / opcje do projektu
         args:
-          - "--ignore-missing-imports"
-          - "--explicit-package-bases"
-          - "src"
+          - '--ignore-missing-imports'
+          - '--explicit-package-bases'
+          - src
 
   # # --- Python: bezpieczeństwo (na push) ---
   # - repo: https://github.com/PyCQA/bandit
@@ -53,21 +65,26 @@ repos:
     hooks:
       # szybkie formatowanie przy commicie
       - id: terraform_fmt
-        stages: [pre-commit]
+        stages:
+          - pre-commit
       # cięższe rzeczy przy pushu
       - id: terraform_validate
-        stages: [pre-push]
+        stages:
+          - pre-push
       # odkomentuj jeśli używasz tflint
       # - id: terraform_tflint
       #   stages: [push]
 
-  # --- Sekrety (na push) ---
+      # --- Sekrety (na push) ---
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-        stages: [pre-push]
-        args: ["--baseline", ".secrets.baseline"]
+        stages:
+          - pre-push
+        args:
+          - '--baseline'
+          - .secrets.baseline
 
   # --- Lokalne hooki projektu (testy itd.) ---
   - repo: local
@@ -78,4 +95,5 @@ repos:
         entry: pytest tests -m "not slow"
         language: system
         pass_filenames: false
-        stages: [pre-push]
+        stages:
+          - pre-push
