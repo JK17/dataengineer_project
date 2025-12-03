@@ -4,17 +4,17 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        stages: [commit]
+        stages: [pre-commit]
       - id: end-of-file-fixer
-        stages: [commit]
+        stages: [pre-commit]
       - id: check-merge-conflict
-        stages: [commit]
+        stages: [pre-commit]
       - id: check-yaml
-        stages: [commit]
+        stages: [pre-commit]
       - id: check-json
-        stages: [commit]
+        stages: [pre-commit]
       - id: check-added-large-files
-        stages: [commit]
+        stages: [pre-commit]
         args: ["--maxkb=1024"]  # max 1 MB na plik
 
   # --- Python: Ruff (szybki formatter + linter) ---
@@ -22,17 +22,17 @@ repos:
     rev: v0.7.0
     hooks:
       - id: ruff-format
-        stages: [commit]
+        stages: [pre-commit]
       - id: ruff
         args: ["check", "--fix"]
-        stages: [commit]
+        stages: [pre-commit]
 
   # --- Python: mypy (cięższy, na push) ---
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.13.0
     hooks:
       - id: mypy
-        stages: [push]
+        stages: [pre-push]
         # dopasuj ścieżki / opcje do projektu
         args: ["--ignore-missing-imports", "src"]
 
@@ -41,7 +41,7 @@ repos:
     rev: 1.7.9
     hooks:
       - id: bandit
-        stages: [push]
+        stages: [pre-push]
         args: ["-r", "src"]
 
   # --- Terraform ---
@@ -50,10 +50,10 @@ repos:
     hooks:
       # szybkie formatowanie przy commicie
       - id: terraform_fmt
-        stages: [commit]
+        stages: [pre-commit]
       # cięższe rzeczy przy pushu
       - id: terraform_validate
-        stages: [push]
+        stages: [pre-push]
       # odkomentuj jeśli używasz tflint
       # - id: terraform_tflint
       #   stages: [push]
@@ -63,7 +63,7 @@ repos:
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-        stages: [push]
+        stages: [pre-push]
         args: ["--baseline", ".secrets.baseline"]
 
   # --- Lokalne hooki projektu (testy itd.) ---
@@ -75,4 +75,4 @@ repos:
         entry: pytest tests -m "not slow"
         language: system
         pass_filenames: false
-        stages: [push]
+        stages: [pre-push]
